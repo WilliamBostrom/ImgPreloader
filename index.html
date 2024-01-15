@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>IMG PRELOADER</title>
+  </head>
+  <body>
+    <section class="container">
+      <h1>IMAGE PRELOADER</h1>
+      <button class="btn">HÄMTA RANDOM BILDER</button>
+      <div class="btn-container">
+        <button class="btn-cat">CAT API</button>
+        <button class="btn-dog">DOG API</button>
+        <button class="btn-radio">RADIO API</button>
+      </div>
+      <section class="hidden">
+        <main class="img-container">
+          <div class="img-card">
+            <img class="img" src="" alt="" loading="lazy" />
+          </div>
+          <div class="img-card">
+            <img class="img" src="" alt="" loading="lazy" />
+          </div>
+          <div class="img-card">
+            <img class="img" src="" alt="" loading="lazy" />
+          </div>
+          <div class="img-card">
+            <img class="img" src="" alt="" loading="lazy" />
+          </div>
+          <div class="img-card">
+            <img class="img" src="" alt="" loading="lazy" />
+          </div>
+          <div class="img-card">
+            <img class="img" src="" alt="" loading="lazy" />
+          </div>
+        </main>
+        <main id="displayOne">
+          <div class="img-card">
+            <img class="img1" src="" alt="" loading="lazy" />
+          </div>
+        </main>
+      </section>
+    </section>
+    <div class="loader"></div>
+    <script defer src="script.js"></script>
+  </body>
+</html>
