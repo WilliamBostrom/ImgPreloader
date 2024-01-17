@@ -66,5 +66,5 @@ Efter att datan är hämtad går _loadImage()_ igenom bild efter bild och i arra
 _Hur loadimage körs inom promiseAllThis och hur bilderna väntar in varandra_
 ![bild på hur bilderna laddas i promiseAllThis functionen](/src/img/loadImgExempel.png)
 
-_Hur loadimage körs inom fetchThis och hur bilderna visas för användaren_
-![bild på hur bilderna laddas i promiseAllThis functionen](/src/img/displayData.png.png)
+_Hur loadimage körs inom fetchThis och hur bilderna visas för användaren (alltså när btnDog, btnCat eller btnRadi trycks)_
+![bild på hur bilderna laddas i visas i displayData functionen](/src/img/displayData.png)
