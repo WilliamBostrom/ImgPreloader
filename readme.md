@@ -47,7 +47,7 @@ _Funktionen som hanterar 3 olika apier samtidigt och visar bilder från alla sam
 
 _fetchThis(apiUrl, apiData):_ Är den andra funktionen som sköter att hämta data från alla olika API:er men när de visas en åt gången. Jag har gjort så att både btnDog, btnCat, och btnRadio returnerar en funktion för att ta ut rätt bild-URL från varje unikt API. Den hämtar datan och transformerar datan från ett API åt gången, och sedan visas bilderna.
 
-\_bild på hur datan från _btnCat_ skickas vidare till _fetchThis()_
+_bild på hur datan från \_btnCat_ skickas vidare till _fetchThis()_
 ![bild på js function för promise.all](/src/img/fetchThisbtnCat.png)
 
 ## Funktioner för att hämta bild-URL:er från olika API:er:
