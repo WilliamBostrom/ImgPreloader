@@ -54,19 +54,22 @@ _bild på hur datan från "btnCat" skickas vidare till "fetchThis()"_
 
 ## Funktioner för att hämta bild-URL:er från olika API:er:
 
-I promiseAllThis() körs en Promise.all över alla tre olika API:er och skickar dem till tre separata funktioner som fetchar och tar ut den nödvändiga datan för att visa bilderna därifrån.
+I _promiseAllThis()_ körs en _Promise.all_ över alla tre olika API:er och skickar dem till tre separata funktioner som fetchar och tar ut den nödvändiga datan för att visa bilderna därifrån.
 
 **getImageUrl(requestUrl):** Hämtar och returnerar hundbilder.
 **getRadioUrl(requestUrl):** Hämtar och returnerar radiobilder.
 **getCatUrl(requestUrl):** Hämtar och returnerar katbilder.
 
 _Exempel på hur en fetch ser ut innan den går tillbaka till promiseAllThis()_
+
 ![bild på hur det fetchas till promiseAllThis](/src/img/getCatUrl.png)
 
-Efter att datan är hämtad går _loadImage()_ igenom bild efter bild och i arrayen “_imagePromises_” innan de skickas till ett nytt loadedImages, som även där väntar in att alla bilder är färdiga med Promise.all innan de visas på skärmen.
+Efter att datan är hämtad går _loadImage()_ igenom bild efter bild och i arrayen “_imagePromises_” innan de skickas till ett nytt _loadedImages_, som även där väntar in att alla bilder är färdiga med Promise.all innan de visas på skärmen.
 
 _Hur loadimage körs inom promiseAllThis och hur bilderna väntar in varandra_
+
 ![bild på hur bilderna laddas i promiseAllThis functionen](/src/img/loadImgExempel.png)
 
 _Hur loadimage körs inom fetchThis och hur bilderna visas för användaren (alltså när btnDog, btnCat eller btnRadi trycks)_
+
 ![bild på hur bilderna laddas i visas i displayData functionen](/src/img/displayData.png)
