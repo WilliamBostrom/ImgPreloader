@@ -45,7 +45,7 @@ _promiseAllThis():_ Hämtar bilder från alla tre olika API:er (Sveriges Radio a
 _Funktionen som hanterar 3 olika apier samtidigt och visar bilder från alla samtidigt_
 ![bild på js function för promise.all](/src/img/promiseAllThis.png)
 
-_fetchThis(apiUrl, apiData):_ Är den andra funktionen som sköter att hämta data från alla olika API:er när de visas samtidigt. Jag har gjort så att både btnDog, btnCat, och btnRadio returnerar en funktion för att ta ut rätt bild-URL från varje unikt API. Den hämtar datan och transformerar datan från ett API åt gången, och sedan visas bilderna.
+_fetchThis(apiUrl, apiData):_ Är den andra funktionen som sköter att hämta data från alla olika API:er men när de visas en åt gången. Jag har gjort så att både btnDog, btnCat, och btnRadio returnerar en funktion för att ta ut rätt bild-URL från varje unikt API. Den hämtar datan och transformerar datan från ett API åt gången, och sedan visas bilderna.
 
 \_bild på hur datan från _btnCat_ skickas vidare till _fetchThis()_
 ![bild på js function för promise.all](/src/img/fetchThisbtnCat.png)
@@ -65,3 +65,6 @@ Efter att datan är hämtad går _loadImage()_ igenom bild efter bild och i arra
 
 _Hur loadimage körs inom promiseAllThis och hur bilderna väntar in varandra_
 ![bild på hur bilderna laddas i promiseAllThis functionen](/src/img/loadImgExempel.png)
+
+_Hur loadimage körs inom fetchThis och hur bilderna visas för användaren_
+![bild på hur bilderna laddas i promiseAllThis functionen](/src/img/displayData.png.png)
