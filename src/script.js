@@ -20,14 +20,10 @@ function displayRandom() {
   displayOne.style.display = "none";
   img_Container[0].style.display = "flex";
 }
-
 function showLoaderSpinner() {
-  hidden.style.visibility = "hidden";
   loaderSpinnerElement.style.visibility = "visible";
 }
-
 function removeLoader() {
-  hidden.style.visibility = "visible";
   loaderSpinnerElement.style.visibility = "hidden";
 }
 
@@ -57,12 +53,18 @@ async function promiseAllThis() {
     const randomnr1 = Math.floor(Math.random() * 8) + 1;
     const randomNr = Math.floor(Math.random() * 8) + 1;
 
-    imgContainer[0].src = await loadImage(dogImages[randomNr]);
-    imgContainer[1].src = await loadImage(radioImages[randomnr1]);
-    imgContainer[2].src = await loadImage(catImages[randomNr]);
-    imgContainer[3].src = await loadImage(dogImages[randomnr1]);
-    imgContainer[4].src = await loadImage(radioImages[randomNr]);
-    imgContainer[5].src = await loadImage(catImages[randomnr1]);
+    const imagePromises = [
+      loadImage(dogImages[randomNr]),
+      loadImage(radioImages[randomnr1]),
+      loadImage(catImages[randomNr]),
+      loadImage(dogImages[randomnr1]),
+      loadImage(radioImages[randomNr]),
+      loadImage(catImages[randomnr1]),
+    ];
+    const loadedImages = await Promise.all(imagePromises);
+    imgContainer.forEach((imgsEl, index) => {
+      imgsEl.src = loadedImages[index];
+    });
 
     removeLoader();
   } catch (error) {
@@ -79,9 +81,9 @@ btn.addEventListener("click", () => {
 });
 
 // Fetchar hundbilder
-async function getImageUrl(requestUrl) {
+async function getImageUrl(apiUrl) {
   try {
-    const res = await fetch(requestUrl);
+    const res = await fetch(apiUrl);
     if (!res.ok) {
       throw new Error("Misslyckad fetch");
     }
@@ -95,9 +97,9 @@ async function getImageUrl(requestUrl) {
 }
 
 // Fetchar radiobilder
-async function getRadioUrl(requestUrl) {
+async function getRadioUrl(apiUrl) {
   try {
-    const res = await fetch(requestUrl);
+    const res = await fetch(apiUrl);
     if (!res.ok) {
       throw new Error("Misslyckad fetch");
     }
@@ -110,9 +112,9 @@ async function getRadioUrl(requestUrl) {
   }
 }
 
-async function getCatUrl(requestUrl) {
+async function getCatUrl(apiUrl) {
   try {
-    const res = await fetch(requestUrl);
+    const res = await fetch(apiUrl);
     if (!res.ok) {
       throw new Error("Misslyckad fetch");
     }
@@ -125,71 +127,46 @@ async function getCatUrl(requestUrl) {
   }
 }
 
-btnDog.addEventListener("click", () => {
-  fetchData(dogApi)
-    .then((dogData) => {
-      let dogImgs = dogData.message.map((dog) => ({
-        img: dog,
-      }));
-      displayOneAtTime();
-      displayData(dogImgs);
-      return dogImgs;
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-});
-
-btnRadio.addEventListener("click", () => {
-  fetchData(radioApi)
-    .then((radioData) => {
-      let radioImgs = radioData.channels.map((radio) => ({
-        img: radio.image,
-      }));
-      displayOneAtTime();
-      displayData(radioImgs);
-      return radioImgs;
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-});
-
-btnCat.addEventListener("click", () => {
-  fetchData(catApi)
-    .then((catData) => {
-      let catImg = catData.map((cat) => ({
-        img: cat.url,
-      }));
-
-      displayOneAtTime();
-      displayData(catImg);
-      return catImg;
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-});
-
-function fetchData(url) {
-  showLoaderSpinner();
-  return new Promise((resolve, reject) => {
-    fetch(url)
-      .then((response) => {
-        if (!response.ok) {
-          reject(new Error(response.status));
-          return;
-        }
-
-        return response.json();
-      })
-      .then((data) => {
-        resolve(data);
-      })
-      .catch((error) => {
-        reject(error);
-      });
+// Hanterar "klick"-händelsen för de olika apierna och tar ut rätt data
+btnDog.addEventListener("click", async () => {
+  await fetchThis(dogApi, (dogData) => {
+    return dogData.message.map((dog) => ({ img: dog }));
   });
+});
+
+btnRadio.addEventListener("click", async () => {
+  await fetchThis(radioApi, (radioData) => {
+    return radioData.channels.map((radio) => ({ img: radio.image }));
+  });
+});
+
+btnCat.addEventListener("click", async () => {
+  await fetchThis(catApi, (catData) => {
+    return catData.map((cat) => ({ img: cat.url }));
+  });
+});
+
+async function fetchThis(apiUrl, apiData) {
+  try {
+    showLoaderSpinner();
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      throw new Error(response.status);
+    }
+
+    const data = await response.json();
+    const transformedData = apiData(data);
+
+    displayOneAtTime();
+    await displayData(transformedData);
+
+    return transformedData;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    removeLoader();
+  }
 }
 
 async function displayData(data) {
